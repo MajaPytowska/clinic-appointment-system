@@ -42,12 +42,12 @@ class PatientsManCtrl{
         $this->getURLParams();
         if($this->selectedPatient){
 
-            $statusId = App::getDB()->get('useraccountstatus', 'idstatus', ['namestatus' => 'active']);
+            $statusId = App::getDB()->get('user_account_status', 'id_status', ['name_status' => 'active']);
             if($statusId){
                 App::getDB()->update('system_user', [
-                    'idstatus' => $statusId
+                    'id_status' => $statusId
                 ], [
-                    'iduser' => $this->selectedPatient
+                    'id_user' => $this->selectedPatient
                 ]);
                 Utils::addInfoMessage('Deklaracja pacjenta została potwierdzona.');
             }
@@ -60,18 +60,18 @@ class PatientsManCtrl{
         if($this->selectedPatient){
             
             App::getDB()->update('appointment', [
-                'patientiduser' => null,
-                'idvisitreason' => null,
-                'reservedbyiduser' => null,
-                'customvisitreason' => null,
-                'reservationdatetime' => null, 
-                'isavailable' => true
+                'patient_id_user' => null,
+                'id_visit_reason' => null,
+                'reserved_by_id_user' => null,
+                'custom_visit_reason' => null,
+                'reservation_datetime' => null, 
+                'is_available' => true
             ], [
-                'patientiduser' => $this->selectedPatient,
+                'patient_id_user' => $this->selectedPatient,
             ]);
             
-            App::getDB()->delete('role_user',['iduser'=>$this->selectedPatient]);
-            App::getDB()->delete('system_user',['iduser'=>$this->selectedPatient]);
+            App::getDB()->delete('role_user',['id_user'=>$this->selectedPatient]);
+            App::getDB()->delete('system_user',['id_user'=>$this->selectedPatient]);
             Utils::addInfoMessage('Pacjent został usunięty.');
         }
         App::getRouter()->redirectTo("showPatientsMan");

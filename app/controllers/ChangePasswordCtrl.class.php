@@ -44,7 +44,7 @@ class ChangePasswordCtrl {
     private function process(){
         try {
             $newHash = password_hash($this->form->new_password, PASSWORD_DEFAULT);
-            App::getDB()->update('system_user', ['password' => $newHash], ['iduser' => $this->userId]);
+            App::getDB()->update('system_user', ['password' => $newHash], ['id_user' => $this->userId]);
             Utils::addInfoMessage('Hasło zostało zmienione.');
             SessionUtils::remove('change_password_user_id');
         } catch (\Exception $e) {

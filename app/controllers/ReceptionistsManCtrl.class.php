@@ -35,8 +35,8 @@ class ReceptionistsManCtrl{
         $this->getURLParams();
         if($this->selectedReceptionist){
             try {
-                App::getDB()->delete('role_user',['iduser'=>$this->selectedReceptionist]);
-                App::getDB()->delete('system_user',['iduser'=>$this->selectedReceptionist]);
+                App::getDB()->delete('role_user',['id_user'=>$this->selectedReceptionist]);
+                App::getDB()->delete('system_user',['id_user'=>$this->selectedReceptionist]);
                 Utils::addInfoMessage('Recepcjonista został usunięty.');
             } catch (\Exception $e) {
                 Utils::addErrorMessage('Błąd podczas usuwania recepcjonisty.');

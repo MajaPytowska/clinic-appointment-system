@@ -31,9 +31,9 @@ class EditVisitReasonCtrl{
 		if(!$this->visitReasonId){
 			return;
 		}
-		$db_visitReason = App::getDB()->get('visitreason', [
-			'namevisitreason(name)',
-			'isenable(isEnable)'
+		$db_visitReason = App::getDB()->get('visit_reason', [
+			'name_visit_reason(name)',
+			'is_enable(isEnable)'
 		], [
 			'idvisitreason' => $this->visitReasonId
 		]);
@@ -54,16 +54,16 @@ class EditVisitReasonCtrl{
 
 		if($this->visitReasonId)
 		{
-			App::getDB()->update('visitreason', [
-				'namevisitreason' => $this->visitReason->name,
-				'isenable' => (int)$this->visitReason->isEnable	
+			App::getDB()->update('visit_reason', [
+				'name_visit_reason' => $this->visitReason->name,
+				'is_enable' => (int)$this->visitReason->isEnable	
 			], [
-				'idvisitreason' => $this->visitReasonId
+				'id_visit_reason' => $this->visitReasonId
 			]);	
 		}else{
 
-			$db_duplicates = App::getDB()->count('visitreason', [
-    			'namevisitreason' => $this->visitReason->name
+			$db_duplicates = App::getDB()->count('visit_reason', [
+    			'name_visit_reason' => $this->visitReason->name
 			]);
 
 			if($db_duplicates > 0)
@@ -72,9 +72,9 @@ class EditVisitReasonCtrl{
 				return;
 			}
 			
-			App::getDB()->insert('visitreason', [
-				'namevisitreason' => $this->visitReason->name,
-				'isenable' => (int)$this->visitReason->isEnable
+			App::getDB()->insert('visit_reason', [
+				'name_visit_reason' => $this->visitReason->name,
+				'is_enable' => (int)$this->visitReason->isEnable
 			]);		
 		}
 		Utils::addInfoMessage('Pomyślnie zapisano.');

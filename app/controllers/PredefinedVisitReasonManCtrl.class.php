@@ -26,12 +26,12 @@ class PredefinedVisitReasonManCtrl{
 	private function loadVisitReasons(){
 		$this->visitReasons = array_map(
 		function($visitReason) { return new VisitReason($visitReason); },
-		App::getDB()->select('visitreason', [
-			'visitreason.idvisitreason(visitReasonId)',
-			'visitreason.namevisitreason(visitReasonName)',
-			'isenable(isEnable)'
+		App::getDB()->select('visit_reason', [
+			'visit_reason.id_visit_reason(visitReasonId)',
+			'visit_reason.name_visit_reason(visitReasonName)',
+			'visit_reason.is_enable(isEnable)'
 		], [
-			'ORDER' => ['visitreason.namevisitreason' => 'ASC']
+			'ORDER' => ['visit_reason.name_visit_reason' => 'ASC']
 		]));
 	}
     
@@ -45,7 +45,7 @@ class PredefinedVisitReasonManCtrl{
 	public function action_deleteVisitReason(){
 		$this->getURLParams();
 		if($this->selectedVisitReason){
-			App::getDB()->delete('visitreason',['idvisitreason'=>$this->selectedVisitReason]);
+			App::getDB()->delete('visit_reason',['id_visit_reason'=>$this->selectedVisitReason]);
 		}
 		App::getRouter()->redirectTo("showPredefinedVisitReasonsMan");
 	}

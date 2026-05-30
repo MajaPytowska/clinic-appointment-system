@@ -36,8 +36,8 @@ class DoctorsManCtrl{
             try {
                 // Sprawdź czy ma umówione (zarezerwowane) wizyty
                 $reserved = App::getDB()->count('appointment', [
-                    'iddoctor' => $this->selectedDoctor,
-                    'isavailable' => 0
+                    'id_doctor' => $this->selectedDoctor,
+                    'is_available' => 0
                 ]);
                 
                 if($reserved > 0){
@@ -48,14 +48,14 @@ class DoctorsManCtrl{
 
                 // Usuń zaplanowane, ale dostępne wizyty tego lekarza
                 App::getDB()->delete('appointment', [
-                    'iddoctor' => $this->selectedDoctor,
-                    'isavailable' => 1
+                    'id_doctor' => $this->selectedDoctor,
+                    'is_available' => 1
                 ]);
 
-                App::getDB()->delete('doctorinfo',['iduser'=>$this->selectedDoctor]);
-                App::getDB()->delete('doctor_specialization',['iddoctor'=>$this->selectedDoctor]);
-                App::getDB()->delete('role_user',['iduser'=>$this->selectedDoctor]);
-                App::getDB()->delete('system_user',['iduser'=>$this->selectedDoctor]);
+                App::getDB()->delete('doctor_info',['id_user'=>$this->selectedDoctor]);
+                App::getDB()->delete('doctor_specialization',['id_doctor'=>$this->selectedDoctor]);
+                App::getDB()->delete('role_user',['id_user'=>$this->selectedDoctor]);
+                App::getDB()->delete('system_user',['id_user'=>$this->selectedDoctor]);
                 Utils::addInfoMessage('Lekarz został usunięty.');
             } catch (\Exception $e) {
                 Utils::addErrorMessage('Błąd podczas usuwania lekarza.');

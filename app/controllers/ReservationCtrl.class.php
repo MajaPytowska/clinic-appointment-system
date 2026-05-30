@@ -67,14 +67,14 @@ class ReservationCtrl{
 		$currentUser = SessionUtils::loadObject('user',true);
 		try{
 			App::getDB()->update('appointment', [
-				'patientiduser' => $this->reservation->patientId ?? $currentUser->id,
-				'reservedbyiduser' => $currentUser->id,
-				'idvisitreason' => $this->reservation->visitReasonId,
-				'customvisitreason' => $this->reservation->customVisitReason,
-				'reservationdatetime' => DatabaseUtils::DB_DateTimeToString(new \DateTime('now')),
-				'isavailable' => (int)false
+				'patient_id_user' => $this->reservation->patientId ?? $currentUser->id,
+				'reserved_by_id_user' => $currentUser->id,
+				'id_visit_reason' => $this->reservation->visitReasonId,
+				'custom_visit_reason' => $this->reservation->customVisitReason,
+				'reservation_datetime' => DatabaseUtils::DB_DateTimeToString(new \DateTime('now')),
+				'is_available' => (int)false
 			], [
-				'idappointment' => $this->reservation->appointmentId
+				'id_appointment' => $this->reservation->appointmentId
 			]);
 			Utils::addInfoMessage('Pomyślnie zapisano rezerwację.');
 			$this->cleanReservationFromSession();

@@ -32,13 +32,13 @@ class RegistrationCtrl{
 		}
 		try{
 			$db_user = App::getDB()->get('system_user', [
-				'iduser(id)',
-				'nameuser(name)',
+				'id_user(id)',
+				'name_user(name)',
 				'surname',
 				'login',
 				'pesel'
 			], [
-				'iduser' => $this->userId
+				'id_user' => $this->userId
 			]);
 			
 			if($db_user){
@@ -123,7 +123,7 @@ class RegistrationCtrl{
 				}
 			}
 		} catch (\PDOException $e){
-			Utils::addErrorMessage("Wystąpił błąd podczas sprawdzania unikalności użytkownika.");
+			Utils::addErrorMessage("Wystąpił błąd podczas sprawdzania unikalności użytkownika." . $e->getMessage());
 		}
 
         return ! App::getMessages()->isError();
@@ -133,12 +133,12 @@ class RegistrationCtrl{
 	private function updateUser(){
 		try{
 			App::getDB()->update('system_user', [
-				'nameuser' => $this->form->user_data->name,
+				'name_user' => $this->form->user_data->name,
 				'surname' => $this->form->user_data->surname,
 				'pesel' => $this->form->user_data->pesel,
 				'login' => $this->form->user_data->login,
 			], [
-				'iduser' => $this->userId
+				'id_user' => $this->userId
 			]);
 			Utils::addInfoMessage('Dane użytkownika zostały zaktualizowane.');
 		} catch (\PDOException $e){
@@ -164,20 +164,20 @@ class RegistrationCtrl{
 					$roleName = $isAdmin ? 'receptionist' : 'patient';
 					$role_id = DatabaseUtils::getRoleIdByName($roleName);
 
-					$statuses = array_column(App::getDB()->select('useraccountstatus', '*'), 'idstatus', 'namestatus');
+					$statuses = array_column(App::getDB()->select('user_account_status', '*'), 'id_status', 'name_status');
 					App::getDB()->insert('system_user', [
-						'nameuser' => $this->form->user_data->name,
+						'name_user' => $this->form->user_data->name,
 						'surname' => $this->form->user_data->surname,
 						'pesel' => $this->form->user_data->pesel,
 						'login' => $this->form->user_data->login,
 						'password' => $password_hash,
-						'idstatus' => RoleUtils::inRole('receptionist') || $isAdmin ?  $statuses['active'] : $statuses['unverified']
+						'id_status' => RoleUtils::inRole('receptionist') || $isAdmin ?  $statuses['active'] : $statuses['unverified']
 					]);
 
 					// Przypisanie roli pacjenta lub recepcjonisty
 					App::getDB()->insert('role_user', [
-						'iduser' => App::getDB()->id(), // Ostatnio dodany użytkownik id
-						'idrole' => $role_id
+						'id_user' => App::getDB()->id(), // Ostatnio dodany użytkownik id
+						'id_role' => $role_id
 					]);
 
 					Utils::addInfoMessage('Rejestracja zakończona sukcesem.');

@@ -21,19 +21,19 @@ class DoctorDetailsCtrl{
 	private function getParams(){
 		try {
 			$tmp = App::getDB()->get('system_user', [
-				'[>]doctorinfo' => ['iduser' => 'iduser'],
-				'[>]doctor_specialization' => ['iduser' => 'iddoctor'],
-				'[>]specialization'        => ['doctor_specialization.idspecialization' => 'idspecialization'],
+				'[>]doctor_info' => ['id_user' => 'id_user'],
+				'[>]doctor_specialization' => ['id_user' => 'id_doctor'],
+				'[>]specialization'        => ['doctor_specialization.id_specialization' => 'id_specialization'],
 
 			], [
-				'system_user.iduser(id)',
-				'system_user.nameuser(name)',
+				'system_user.id_user(id)',
+				'system_user.name_user(name)',
 				'system_user.surname',
-				'system_user.photourl',
-				'doctorinfo.description',
-				'specializations' => App::getDB()->raw('GROUP_CONCAT(DISTINCT specialization.namespecialization ORDER BY specialization.namespecialization SEPARATOR \', \')')
+				'system_user.photo_url(photourl)',
+				'doctor_info.description',
+				'specializations' => App::getDB()->raw('GROUP_CONCAT(DISTINCT specialization.name_specialization ORDER BY specialization.name_specialization SEPARATOR \', \')')
 			], [
-				'system_user.iduser' => ParamUtils::getFromCleanURL(1)
+				'system_user.id_user' => ParamUtils::getFromCleanURL(1)
 			]);
 			$this->doctor = new Doctor($tmp);
 		} catch (\Exception $e) {
@@ -51,8 +51,8 @@ class DoctorDetailsCtrl{
 	#endregion
 
 	//Funkcja generująca widok
-	private function generateView(){
-		App::getSmarty()->assign('doctor', $this->doctor);
+		private function generateView(){
+			App::getSmarty()->assign('doctor', $this->doctor);
 		$blockReservation = false;
 		$user = SessionUtils::loadObject('user', true);
 			if($user && $user->status !== 'active'){

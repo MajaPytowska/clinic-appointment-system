@@ -51,21 +51,21 @@ class EditDoctorCtrl{
             return;
         }
         $db_doctor = App::getDB()->get('system_user', [
-            '[>]doctorinfo' => ['iduser' => 'iduser']
+            '[>]doctor_info' => ['id_user' => 'id_user']
         ], [
             'system_user.nameuser(name)',
             'system_user.surname',
             'system_user.photourl(photourl)',
-            'doctorinfo.description(description)'
+            'doctor_info.description(description)'
         ], [
-            'system_user.iduser' => $this->doctorId
+            'system_user.id_user' => $this->doctorId
         ]);
 
         if($db_doctor){
             $this->doctorForm->preload($db_doctor);
         }
         // load specializations ids
-        $specs = App::getDB()->select('doctor_specialization', ['idspecialization'], ['iddoctor' => $this->doctorId]);
+        $specs = App::getDB()->select('doctor_specialization', ['idspecialization'], ['id_doctor' => $this->doctorId]);
         if ($specs) {
             if (isset($specs[0]) && is_array($specs[0])) {
                 $ids = array_column($specs, 'idspecialization');
@@ -97,11 +97,11 @@ class EditDoctorCtrl{
                 Utils::addErrorMessage("Nazwa specjalizacji '{$specName}' jest zbyt długa (max 50 znaków).");
                 return;
             }
-            $existingId = App::getDB()->get('specialization','idspecialization',[ 'namespecialization' => $specName ]);
+            $existingId = App::getDB()->get('specialization','id_specialization',[ 'name_specialization' => $specName ]);
             if ($existingId) {
                 $allSpecIds[] = (int)$existingId;
             } else {
-                App::getDB()->insert('specialization',[ 'namespecialization' => $specName ]);
+                App::getDB()->insert('specialization',[ 'name_specialization' => $specName ]);
                 $newId = App::getDB()->id();
                 if ($newId) {
                     $allSpecIds[] = (int)$newId;
@@ -113,29 +113,29 @@ class EditDoctorCtrl{
         if($this->doctorId)
         {
             App::getDB()->update('system_user', [
-                'nameuser' => $this->doctorForm->name,
+                'name_user' => $this->doctorForm->name,
                 'surname' => $this->doctorForm->surname,
                 'photourl' => $this->doctorForm->photoUrl
             ], [
-                'iduser' => $this->doctorId
+                'id_user' => $this->doctorId
             ]);
-            App::getDB()->update('doctorinfo', [
+            App::getDB()->update('doctor_info', [
                 'description' => $this->doctorForm->description
             ], [
-                'iduser' => $this->doctorId
+                'id_user' => $this->doctorId
             ]);
 
-            App::getDB()->delete('doctor_specialization', ['iddoctor' => $this->doctorId]);
+            App::getDB()->delete('doctor_specialization', ['id_doctor' => $this->doctorId]);
             foreach ($allSpecIds as $specId) {
                 App::getDB()->insert('doctor_specialization', [
-                    'iddoctor' => $this->doctorId,
-                    'idspecialization' => (int)$specId
+                    'id_doctor' => $this->doctorId,
+                    'id_specialization' => (int)$specId
                 ]);
             }
         }else{
 
             App::getDB()->insert('system_user', [
-                'nameuser' => $this->doctorForm->name,
+                'name_user' => $this->doctorForm->name,
                 'surname' => $this->doctorForm->surname,
                 'photourl' => $this->doctorForm->photoUrl
             ]);
@@ -143,17 +143,17 @@ class EditDoctorCtrl{
             if($newId){
                 App::getDB()->insert('role_user', [
                     'idrole' => 5, // doctor
-                    'iduser' => $newId
+                    'id_user' => $newId
                 ]);
-                App::getDB()->insert('doctorinfo', [
+                App::getDB()->insert('doctor_info', [
                     'description' => $this->doctorForm->description,
-                    'iduser' => $newId
+                    'id_user' => $newId
                 ]);
 
                 foreach ($allSpecIds as $specId) {
                     App::getDB()->insert('doctor_specialization', [
-                        'iddoctor' => $newId,
-                        'idspecialization' => (int)$specId
+                        'id_doctor' => $newId,
+                        'id_specialization' => (int)$specId
                     ]);
                 }
             }

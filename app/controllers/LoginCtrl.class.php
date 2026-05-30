@@ -43,12 +43,12 @@ class LoginCtrl{
 		if ( !App::getMessages()->isError()) { //sprawdzenie czy są parametry
 		
             $db_user =  App::getDB()->get('system_user', [
-                '[>]useraccountstatus(status)' => ['idstatus' => 'idstatus'],
+                '[>]user_account_status(status)' => ['id_status' => 'id_status'],
             ], [
-                'iduser(id)',
-                'nameuser(name)',
+                'id_user(id)',
+                'name_user(name)',
                 'surname',
-                'status.namestatus(status)',
+                'status.name_status(status)',
                 'pesel',
                 'login',
                 'password'
@@ -64,11 +64,11 @@ class LoginCtrl{
             if(password_verify($this->form->password, $db_user['password']) ) {
 
                 $roles = App::getDB()->select('role_user', [
-                    '[><]role' => ['idrole' => 'idrole']
+                    '[><]role' => ['id_role' => 'id_role']
                 ], [
-                    'namerole(role_name)'
+                    'name_role(role_name)'
                 ], [
-                    'iduser' => $db_user['id']
+                    'id_user' => $db_user['id']
                 ]);
 
                 $user = new User($db_user);

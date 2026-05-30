@@ -77,16 +77,16 @@ class EditAppointmentCtrl{
 		}
 		try {
 			$db_appointment = App::getDB()->get('appointment', [
-				'startdatetime(startDateTime)',
-				'enddatetime(endDateTime)', 
-				'isavailable',
-				'iddoctor(doctorId)',
-				'idoffice(officeId)',
-				'idvisitreason(visitReasonId)',
+				'start_datetime(startDateTime)',
+				'end_datetime(endDateTime)', 
+				'is_available',
+				'id_doctor(doctorId)',
+				'id_office(officeId)',
+				'id_visit_reason(visitReasonId)',
 				'customvisitreason(customVisitReason)'
 
 			], [
-				'idappointment' => $this->appointmentId
+				'id_appointment' => $this->appointmentId
 			]);
 			if($db_appointment){
 				$this->appointment->preload($db_appointment);
@@ -102,10 +102,10 @@ class EditAppointmentCtrl{
 			$this->offices = array_map(
 			function($office) { return new Office($office); },
 			App::getDB()->select('office', [
-				'office.idoffice(officeId)',
-				'office.nameoffice(officeName)'
+				'office.id_office(officeId)',
+				'office.name_office(officeName)'
 			], [
-				'ORDER' => ['office.nameoffice' => 'ASC']
+				'ORDER' => ['office.name_office' => 'ASC']
 			]));
 		} catch (\Exception $e) {
 			Utils::addErrorMessage('Błąd podczas pobierania listy gabinetów.');
@@ -151,21 +151,21 @@ class EditAppointmentCtrl{
 				if($this->appointmentId)
 				{
 					App::getDB()->update('appointment', [
-						'startdatetime' => DatabaseUtils::DB_DateTimeToString($startDateTime),
-						'enddatetime' => DatabaseUtils::DB_DateTimeToString($endDateTime),
-						'iddoctor' => $this->appointment->doctorId,
-						'idoffice' => $this->appointment->officeId,
-						'isavailable' => true
+						'start_datetime' => DatabaseUtils::DB_DateTimeToString($startDateTime),
+						'end_datetime' => DatabaseUtils::DB_DateTimeToString($endDateTime),
+						'id_doctor' => $this->appointment->doctorId,
+						'id_office' => $this->appointment->officeId,
+						'is_available' => true
 					], [
-						'idappointment' => $this->appointmentId
+						'id_appointment' => $this->appointmentId
 					]);
 				}else{
 					App::getDB()->insert('appointment', [
-						'startdatetime' => DatabaseUtils::DB_DateTimeToString($startDateTime),
-						'enddatetime' => DatabaseUtils::DB_DateTimeToString($endDateTime),
-						'iddoctor' => $this->appointment->doctorId,
-						'idoffice' => $this->appointment->officeId,
-						'isavailable' => true
+						'start_datetime' => DatabaseUtils::DB_DateTimeToString($startDateTime),
+						'end_datetime' => DatabaseUtils::DB_DateTimeToString($endDateTime),
+						'id_doctor' => $this->appointment->doctorId,
+						'id_office' => $this->appointment->officeId,
+						'is_available' => true
 					]);
 				}
 				Utils::addInfoMessage('Pomyślnie zapisano wizytę.');
