@@ -21,20 +21,18 @@ jobs:
         php_version: '8.2'
         args: tests
         bootstrap: vendor/autoload.php
-  test_connection:
+  deployment:
+    needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: Wykonanie testowego połączenia z maszyną Azure
+      - name: Deployment on Azure VM
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.AZURE_HOST }}
           username: ${{ secrets.AZURE_USER }}
           key: ${{ secrets.AZURE_SSH_KEY }}
           script: |
-            echo "=========================================="
-            echo "Połączenie SSH zostało nawiązane pomyślnie!"
-            echo "Zalogowano jako użytkownik:"
-            whoami
-            echo "Nazwa hosta maszyny:"
-            hostname
-            echo "=========================================="
+            cd /home/ps_project/clinic-appointment-system/src
+
+            # Najnowsze zmiany zostają pobrane na dysk maszyny wirtualnej
+            git pull origin main
