@@ -65,10 +65,10 @@ class EditDoctorCtrl{
             $this->doctorForm->preload($db_doctor);
         }
         // load specializations ids
-        $specs = App::getDB()->select('doctor_specialization', ['idspecialization'], ['id_doctor' => $this->doctorId]);
+        $specs = App::getDB()->select('doctor_specialization', ['id_specialization'], ['id_doctor' => $this->doctorId]);
         if ($specs) {
             if (isset($specs[0]) && is_array($specs[0])) {
-                $ids = array_column($specs, 'idspecialization');
+                $ids = array_column($specs, 'id_specialization');
             } else {
                 $ids = $specs;
             }
