@@ -55,7 +55,7 @@ class EditDoctorCtrl{
         ], [
             'system_user.nameuser(name)',
             'system_user.surname',
-            'system_user.photourl(photourl)',
+            'system_user.photo_url(photourl)',
             'doctor_info.description(description)'
         ], [
             'system_user.id_user' => $this->doctorId
@@ -115,7 +115,7 @@ class EditDoctorCtrl{
             App::getDB()->update('system_user', [
                 'name_user' => $this->doctorForm->name,
                 'surname' => $this->doctorForm->surname,
-                'photourl' => $this->doctorForm->photoUrl
+                'photo_url' => $this->doctorForm->photoUrl
             ], [
                 'id_user' => $this->doctorId
             ]);
@@ -137,7 +137,7 @@ class EditDoctorCtrl{
             App::getDB()->insert('system_user', [
                 'name_user' => $this->doctorForm->name,
                 'surname' => $this->doctorForm->surname,
-                'photourl' => $this->doctorForm->photoUrl
+                'photo_url' => $this->doctorForm->photoUrl
             ]);
             $newId = App::getDB()->id();
             if($newId){
