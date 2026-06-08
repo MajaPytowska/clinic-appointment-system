@@ -122,9 +122,8 @@ class EditAppointmentCtrl{
 	private function validate(): bool{
 		return !App::getMessages()->isError();
 	}
-
-	private function process(){
-
+	
+	private function getAppointmentDateTime(&$startDateTime, &$endDateTime){
 		$startDateTime = DateTime::createFromFormat('d/m/Y H:i', $this->appointment->date . ' ' . $this->appointment->startTime);
 		$endDateTime = DateTime::createFromFormat('d/m/Y H:i', $this->appointment->date . ' ' . $this->appointment->endTime);
 		$clinicStartHour = DateTime::createFromFormat('d/m/Y H:i', $this->appointment->date . ' 7:00');
@@ -145,6 +144,11 @@ class EditAppointmentCtrl{
 				Utils::addErrorMessage('Wizyta nie może trwać dłużej niż 4 godzin.');
 			}
 		}
+	}
+
+	private function process(){
+
+		$this->getAppointmentDateTime($startDateTime, $endDateTime);
 
 		if(!App::getMessages()->isError()){
 			try {
