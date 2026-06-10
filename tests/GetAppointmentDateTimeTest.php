@@ -20,7 +20,8 @@ class GetAppointmentDateTimeTest extends TestCase
  
         $ctrl = new EditAppointmentCtrl();
  
-        // getAppointmentDateTime wykorzystuje pole prywatne $appointment, więc trzeba zamockować jego wartość, a dostać się do niego przez refleksję.
+        // getAppointmentDateTime wykorzystuje pole prywatne $appointment, więc trzeba zamockować jego wartość,
+        // a dostać się do niego przez refleksję.
         $appointmentProp = new ReflectionProperty(EditAppointmentCtrl::class, 'appointment');
         $form = $appointmentProp->getValue($ctrl);
         $form->date = $date;

@@ -26,15 +26,11 @@
 				<!-- Banner -->
 					<section id="banner">
 						<div class="inner">
-							<h2>Spectral</h2>
-							<p>Another fine responsive<br />
-							site template freebie<br />
-							crafted by <a href="http://html5up.net">HTML5 UP</a>.</p>
-							<ul class="actions special">
-								<li><a href="#" class="button primary">Activate</a></li>
-							</ul>
+							<h2>Przychodnia</h2>
+							<p>Tutaj umówisz sie na wizytę u specjalisty!<br />
+							site template freebie<br /></p>
 						</div>
-						<a href="#one" class="more scrolly">Learn More</a>
+						<a href="#one" class="more scrolly">Dowiedź się więcej</a>
 					</section>
 
 				<!-- One -->
