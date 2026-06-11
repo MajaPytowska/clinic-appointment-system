@@ -44,7 +44,7 @@
                     <td>
                         {if $isPatient}
                             {if !$appointment->isAvailable}
-                                <a class="button primary fit small" href="{url action='cancelAppointment' param1=$appointment->id}">Anuluj</a>
+                                <a class="button primary fit small" onclick="confirmLink('{url action='cancelAppointment' param1=$appointment->id}', 'Czy na pewno chcesz anulować tą wizytę?')">Anuluj</a>
                             {/if}
                         {else}
                             <a class="button primary fit small" onclick="confirmLink('{url action='deleteAppointment' param1=$appointment->id}', 'Czy na pewno chcesz usunąć tę wizytę?')">Usuń</a>
