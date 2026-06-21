@@ -27,8 +27,7 @@
 					<section id="banner">
 						<div class="inner">
 							<h2>Przychodnia</h2>
-							<p>Tutaj umówisz sie na wizytę u specjalisty!<br />
-							site template freebie<br /></p>
+							<p>Tutaj umówisz sie na wizytę u specjalisty!</p>
 						</div>
 						<a href="#one" class="more scrolly">Dowiedź się więcej</a>
 					</section>

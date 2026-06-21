@@ -158,7 +158,7 @@ class EditAppointmentCtrl{
 						'end_datetime' => DatabaseUtils::DB_DateTimeToString($endDateTime),
 						'id_doctor' => $this->appointment->doctorId,
 						'id_office' => $this->appointment->officeId,
-						'is_available' => $this->appointment->isAvailable
+						'is_available' => $this->appointment->isAvailable ?? true
 					], [
 						'id_appointment' => $this->appointmentId
 					]);
