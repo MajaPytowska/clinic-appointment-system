@@ -26,7 +26,7 @@
 				<!-- Banner -->
 					<section id="banner">
 						<div class="inner">
-							<h2>Przychodnia</h2>
+							<h2>Przychodnia - Projekt Systemu</h2>
 							<p>Tutaj umówisz sie na wizytę u specjalisty!</p>
 						</div>
 						<a href="#one" class="more scrolly">Dowiedź się więcej</a>
